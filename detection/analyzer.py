@@ -1,5 +1,6 @@
 import csv
 from datetime import datetime, timedelta
+from database import create_database, save_alert
 
 LOG_FILE = "../data/security_logs.csv"
 
@@ -124,11 +125,14 @@ def detect_suspicious_login(logs):
 
     return alerts
 
+create_database()
 logs = load_logs()
 
 alerts = detect_brute_force(logs)
 alerts += detect_success_after_brute_force(logs)
 alerts += detect_suspicious_login(logs)
+for alert in alerts:
+    save_alert(alert)
 
 print("Security Analysis")
 print("-----------------")
