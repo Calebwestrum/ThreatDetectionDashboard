@@ -1,6 +1,6 @@
 import csv
 from datetime import datetime, timedelta
-from database import create_database, save_alert
+from database import create_database, save_alert, get_alerts
 
 LOG_FILE = "../data/security_logs.csv"
 
@@ -144,3 +144,9 @@ for alert in alerts:
         f"Target: {alert.get('target_user', 'N/A')} | "
         f"Failed Attempts: {alert.get('failed_attempts', 'N/A')}"
     )
+
+print("\nStored Alerts")
+print("-------------")
+
+for alert in get_alerts():
+    print(alert)

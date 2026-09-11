@@ -50,3 +50,27 @@ def save_alert(alert):
 
     connection.commit()
     connection.close()
+    
+def get_alerts():
+    connection = sqlite3.connect(DATABASE)
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT
+            id,
+            alert_type,
+            severity,
+            source_ip,
+            target_user,
+            failed_attempts,
+            timestamp
+        FROM alerts
+        ORDER BY timestamp DESC
+    """)
+
+    alerts = cursor.fetchall()
+
+    connection.close()
+
+    return alerts
